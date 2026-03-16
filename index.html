@@ -1,42 +1,110 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<title>Aurélie – Semeuse de graines</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>La chanson d’Aurélie</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #f7f3ec, #e8dfd1);
+      color: #3a3128;
+      text-align: center;
+    }
 
-<style>
-body{
-font-family:Arial;
-text-align:center;
-background:#f5efe6;
-margin-top:40px;
-}
+    .conteneur {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 30px 20px 50px 20px;
+    }
 
-img{
-width:320px;
-border-radius:12px;
-box-shadow:0 5px 15px rgba(0,0,0,0.3);
-}
+    .carte {
+      background: rgba(255,255,255,0.78);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
 
-audio{
-margin-top:30px;
-width:320px;
-}
-</style>
+    img {
+      width: 100%;
+      max-width: 420px;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      margin-bottom: 22px;
+    }
 
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 2em;
+      line-height: 1.2;
+    }
+
+    h2 {
+      margin: 0 0 20px 0;
+      font-size: 1.1em;
+      font-weight: normal;
+      color: #6b5c4c;
+    }
+
+    p {
+      margin: 0 0 24px 0;
+      font-size: 1.05em;
+      line-height: 1.5;
+    }
+
+    audio {
+      width: 100%;
+      max-width: 420px;
+      margin-top: 10px;
+    }
+
+    .signature {
+      margin-top: 26px;
+      font-size: 0.95em;
+      color: #7a6a59;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.7em;
+      }
+
+      h2 {
+        font-size: 1em;
+      }
+
+      .carte {
+        padding: 18px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="conteneur">
+    <div class="carte">
+      <img src="pochette.png" alt="Pochette de la chanson">
 
-<h1>Aurélie – Semeuse de graines</h1>
+      <h1>La chanson d’Aurélie</h1>
+      <h2>Un cadeau à écouter</h2>
 
-<img src="pochette.png">
+      <p>
+        Cette chanson t’est offerte avec affection.<br>
+        Il suffit d’appuyer sur lecture.
+      </p>
 
-<br>
+      <audio controls>
+        <source src="chanson-aurelie.mp3" type="audio/mpeg">
+        Votre navigateur ne prend pas en charge la lecture audio.
+      </audio>
 
-<audio controls>
-<source src="chanson-aurelie.mp3" type="audio/mpeg">
-</audio>
-
+      <div class="signature">
+        Avec toute mon affection
+      </div>
+    </div>
+  </div>
 </body>
 </html>
