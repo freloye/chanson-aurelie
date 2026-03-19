@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>La chanson d’Aurélie</title>
+  <title>La semeuse de graines</title>
   <style>
     body {
       margin: 0;
@@ -21,13 +21,13 @@
     }
 
     .carte {
-      background: rgba(255,255,255,0.78);
+      background: rgba(255,255,255,0.82);
       border-radius: 18px;
       padding: 24px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     }
 
-    img {
+    .pochette {
       width: 100%;
       max-width: 420px;
       height: auto;
@@ -55,10 +55,66 @@
       line-height: 1.5;
     }
 
-    audio {
+    .choix {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0 10px 0;
+    }
+
+    .bouton {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      background: #ffffff;
+      color: #3a3128;
+    }
+
+    .bouton:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.16);
+    }
+
+    .bouton:active {
+      transform: translateY(0);
+    }
+
+    .zone-media {
+      margin-top: 22px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      display: none;
+    }
+
+    .zone-media.visible {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    audio, video {
       width: 100%;
       max-width: 420px;
-      margin-top: 10px;
+      margin-top: 8px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      background: #000;
+    }
+
+    .retour {
+      margin-top: 18px;
+      font-size: 0.95em;
+      color: #7a6a59;
+      cursor: pointer;
+      text-decoration: underline;
+      background: none;
+      border: none;
     }
 
     .signature {
@@ -80,31 +136,110 @@
       .carte {
         padding: 18px;
       }
+
+      .bouton {
+        width: 100%;
+        max-width: 320px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="conteneur">
     <div class="carte">
-      <img src="pochette.png" alt="Pochette de la chanson">
+      <img src="pochette.png" alt="Pochette de la chanson" class="pochette">
 
       <h1>La semeuse de graines</h1>
-      <h2>Un cadeau à écouter</h2>
+      <h2>Un cadeau à écouter… ou à regarder</h2>
 
       <p>
-        Joyeux anniversaire ! .<br>
-        Il suffit d’appuyer sur lecture.
+        Joyeux anniversaire !<br>
+        Choisissez votre expérience.
       </p>
 
-      <audio controls>
-        <source src="chanson-aurelie.mp3" type="audio/mpeg">
-        Votre navigateur ne prend pas en charge la lecture audio.
-      </audio>
+      <div class="choix">
+        <button class="bouton" onclick="showAudio()">🎵 Écouter la chanson</button>
+        <button class="bouton" onclick="showVideo()">🎥 Voir la vidéo</button>
+      </div>
+
+      <div id="audioZone" class="zone-media">
+        <audio id="audioPlayer" controls preload="metadata">
+          <source src="chanson.mp3" type="audio/mpeg">
+          Votre navigateur ne prend pas en charge la lecture audio.
+        </audio>
+      </div>
+
+      <div id="videoZone" class="zone-media">
+        <video id="videoPlayer" controls preload="metadata" poster="pochette.png" playsinline>
+          <source src="disque-aurelie-video.mp4" type="video/mp4">
+          Votre navigateur ne prend pas en charge la lecture vidéo.
+        </video>
+      </div>
+
+      <button id="retourBtn" class="retour" style="display:none;" onclick="resetView()">
+        Revenir à la pochette
+      </button>
 
       <div class="signature">
         Avec toute mon amitié
       </div>
     </div>
   </div>
+
+  <script>
+    const audioZone = document.getElementById("audioZone");
+    const videoZone = document.getElementById("videoZone");
+    const audioPlayer = document.getElementById("audioPlayer");
+    const videoPlayer = document.getElementById("videoPlayer");
+    const retourBtn = document.getElementById("retourBtn");
+
+    function hideAll() {
+      audioPlayer.pause();
+      videoPlayer.pause();
+
+      audioZone.classList.remove("visible");
+      videoZone.classList.remove("visible");
+
+      setTimeout(() => {
+        if (!audioZone.classList.contains("visible")) audioZone.style.display = "none";
+        if (!videoZone.classList.contains("visible")) videoZone.style.display = "none";
+      }, 350);
+    }
+
+    function showAudio() {
+      hideAll();
+      audioZone.style.display = "block";
+      setTimeout(() => audioZone.classList.add("visible"), 10);
+      retourBtn.style.display = "inline-block";
+
+      const playPromise = audioPlayer.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          /* Certains navigateurs mobiles exigent un clic supplémentaire */
+        });
+      }
+    }
+
+    function showVideo() {
+      hideAll();
+      videoZone.style.display = "block";
+      setTimeout(() => videoZone.classList.add("visible"), 10);
+      retourBtn.style.display = "inline-block";
+
+      const playPromise = videoPlayer.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          /* Certains navigateurs mobiles exigent un clic supplémentaire */
+        });
+      }
+    }
+
+    function resetView() {
+      hideAll();
+      retourBtn.style.display = "none";
+      audioPlayer.currentTime = 0;
+      videoPlayer.currentTime = 0;
+    }
+  </script>
 </body>
 </html>
